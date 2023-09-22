@@ -1,0 +1,46 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h2>Mes Formations</h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th >Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for formation in formations %}
+                    <tr>
+                        <td>{{ formation.titre }}</td>
+                        <td ><p class="text-truncate " style="width: 400px"> {{ formation.description }}</p></td>
+                        <td>{{ formation.dateFormation|date('d/m/y') }}</td>
+                        <td>
+                            <a href="{{ path('app_formation_show', {'id': formation.id}) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            <a href="{{ path('app_formation_edit', {'id': formation.id}) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                            {{ include('formation/_delete_form.html.twig') }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Pas de formations renseignées</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ path('app_formation_new') }}" class="btn btn-primary">Ajouter</a>
+    </div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidats{% endblock %}
+{% block style %}
+    <style>
+        .searchBar {
+            background: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container min-vh-100">
+
+        <div class="mt-5 d-flex gap-4 py-5">
+            <form class="col-md-3 ">
+                <div class="searchBar w-100 shadow-lg h-100 border rounded p-4 d-flex flex-column gap-4">
+
+
+                    <div>
+                        <label class="label-form" for="profil">Profile</label>
+                        <select id="profil" class="form-control" name="profil">
+                            <option value=""></option>
+                            {% for profilItem in profiles %}
+                                <option value="{{ profilItem }}" {% if profilItem == profil %}selected {% endif %}>{{ profilItem }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-form" for="skills">Skills</label>
+                        <select id="skills" class="form-control select2" name="skills[]" multiple="multiple">
+                            <option value=""></option>
+                            {% for skill in skills %}
+                                <option value="{{ skill.id }}" >{{ skill.titre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-form" for="typeContrat">Type de contrat</label>
+                        <select id="typeContrat" class="form-control" name="typeContrat">
+                            <option value=""></option>
+                            {% for typeContratItem in typeContrats %}
+                                <option value="{{ typeContratItem }}" {% if typeContratItem == typeContrat %}selected {% endif %}>{{ typeContratItem }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="tjmContainer" >
+                        <label>TJM</label>
+                        <div class="d-flex justify-content-between gap-4">
+                            <input type="number" id="minTjm" name="minTjm" value="{{ minTjm }}" placeholder="Min" class="form-control">
+                            <input type="number" id="maxTjm" name="maxTjm" value="{{ maxTjm }}" placeholder="Max" class="form-control">
+                        </div>
+                    </div>
+                    <div id="salaireContainer" >
+                        <label>Salaire</label>
+                        <div class="d-flex justify-content-between gap-2">
+                            <input type="number" id="minSalaire" name="minSalaire" value="{{ minSalaire }}" placeholder="Min" class="form-control">
+                            <input type="number" id="maxSalaire" name="maxSalaire" value="{{ maxSalaire }}" placeholder="Max" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Recherche</button>
+                    <button type="reset" class="btn btn-secondary ">Supprimer</button>
+
+                </div>
+            </form>
+            <div class="col-md-9">
+                <div class="row row-cols-1 row-cols-md-3 ">
+                    <!-- Carte 1 -->
+                    {% for candidat in candidats %}
+                        <div class="col mb-4">
+                            <div class="card ">
+                                <div class="card-body shadow-md">
+                                    <h5 class="card-title text-truncate">{{ candidat.getFullName() }}</h5>
+                                    <p class="card-text text-truncate"><strong>Disponibilité</strong> : {{ candidat.candidatInfo.disponibilite is not null ? candidat.candidatInfo.disponibilite|date('d/m/y') : '' }}
+                                    </p>
+                                    <p class="card-text text-truncate"><strong>Nombre d'experience</strong> : {{ candidat.candidatInfo.nombreExp }}</p>
+                                    <p class="card-text text-truncate"><strong>Profil</strong> : {{ candidat.candidatInfo.typeProfile }}</p>
+                                    <a href="/candidat/info/{{ candidat.id }}" class="btn btn-primary ">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="navigation d-block mx-auto">
+                    {{ knp_pagination_render(candidats) }}
+                </div>
+            </div>
+
+
+
+            <!-- Pagination -->
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $( document ).ready(function() {
+            console.log('value')
+
+            $('#typeContrat').change(function (e){
+                const value = e.target.value;
+                console.log(value)
+                if (value ==='CDI') {
+                    $('#salaireContainer').show();
+                    $('#tjmContainer').hide();
+                }else if(value ==='Freelance') {
+                    $('#salaireContainer').hide();
+                    $('#tjmContainer').show();
+                }else {
+                    $('#salaireContainer').hide();
+                    $('#tjmContainer').hide();
+                }
+            })
+            $('#typeContrat').trigger('change');
+        });
+    </script>
+{% endblock %}

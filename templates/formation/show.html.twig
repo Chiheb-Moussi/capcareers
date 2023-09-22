@@ -1,0 +1,29 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h1 class="mb-4">Details Fomation </h1>
+
+        <table class="table table-striped">
+            <tbody>
+
+            <tr>
+                <th>Titre</th>
+                <td>{{ formation.titre }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ formation.description }}</td>
+            </tr>
+            <tr>
+                <th>Date de formation</th>
+                <td>{{ formation.dateFormation|date('d/m/y') }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_formation_index') }}" class="btn btn-primary">Retourner</a>
+    </div>
+{% endblock %}

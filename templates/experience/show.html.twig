@@ -1,0 +1,40 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h1 class="mb-4"> Details Experience</h1>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th class="w-25">Entreprise</th>
+                <td>{{ experience.nomEntreprise }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ experience.titre }}</td>
+            </tr>
+            <tr>
+                <th>Date début</th>
+                <td>{{ experience.dateDebut|date('d/m/y') }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin</th>
+                <td>{{ experience.dateFin|date('d/m/y') }}</td>
+            </tr>
+            <tr>
+                <th>Nombre d'Année</th>
+                <td>{{ experience.nombreAnnee }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ experience.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_experience_index') }}" class="btn btn-primary">Retourner</a>
+    </div>
+{% endblock %}
+

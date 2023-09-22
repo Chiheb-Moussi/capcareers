@@ -1,16 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Incscription candidat{% endblock %}
+{% block style %}
+    <style>
+        .footer {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <section class="bg-white dark:bg-gray-900">
+    <section class="bg-white dark-bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center">
-                <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Vérifiez Votre Adresse Email</p>
-                <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">Merci de vous être inscrit(e) sur notre site. Nous avons envoyé un email à l'adresse que vous avez fournie lors de l'inscription. </p>
-                <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">Pour activer votre compte Cliquez sur le lien de vérification dans l'email.</p>
-                <a href="/login" class="inline-flex text-white bg-sky-600 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-sky-900 my-4">Se connecter</a>
+                <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark-text-white">Vérifiez Votre Adresse Email</p>
+                <p class="mb-4 text-lg font-light text-gray-500 dark-text-gray-400">Merci de vous être inscrit(e) sur notre site. Nous avons envoyé un email à l'adresse que vous avez fournie lors de l'inscription.</p>
+                <p class="mb-4 text-lg font-light text-gray-500 dark-text-gray-400">Pour activer votre compte, cliquez sur le lien de vérification dans l'email.</p>
+                <a href="/login" class="btn btn-primary fw-bold text-sm px-5 py-2.5 text-center">Se connecter</a>
             </div>
         </div>
     </section>
+
 {% endblock %}

@@ -1,154 +1,321 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
+{% block title %}Accueil{% endblock %}
 {% block body %}
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-sky-900 md:text-5xl lg:text-6xl dark:text-white">Trouvez Votre Prochain Emploi</h1>
-            <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Trouvez votre prochain emploi, bâtissez votre avenir.<br> Découvrez des opportunités qui correspondent à vos ambitions.</p>
-            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-900">
-                    Commencez dès Maintenant
-                    <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </a>
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                    Voir Nos Offres d'Emploi
-                </a>
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero">
+        <div class="container position-relative">
+            <div class="row gy-5" data-aos="fade-in">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+                    <h2>Trouvez Votre Prochain <span>Emploi / Candidat</span></h2>
+                    <p>Trouvez votre prochain emploi, bâtissez votre avenir.<br> Découvrez des opportunités qui correspondent à vos ambitions.</p>
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <a href="/register" class="btn-get-started">Commencez dès Maintenant</a>
+                        <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><span>Voir Nos Offres d'Emploi</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2">
+                    <img src="{{ asset('assets/img/hero-img.svg')}}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+                </div>
             </div>
         </div>
-    </section>
-    <section class="bg-white dark:bg-gray-900">
-        <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
-            <dl class="grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl md:text-4xl font-extrabold">12k+</dt>
-                    <dd class="font-light text-gray-500 dark:text-gray-400">Offres d'emploi</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl md:text-4xl font-extrabold">800+</dt>
-                    <dd class="font-light text-gray-500 dark:text-gray-400">Entreprises</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl md:text-4xl font-extrabold">10k+</dt>
-                    <dd class="font-light text-gray-500 dark:text-gray-400">Récrutements</dd>
-                </div>
-            </dl>
-        </div>
-    </section>
 
-    <section class="bg-sky-100 dark:bg-gray-900">
-        <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
-            <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Trouvez les Meilleurs Talents pour Votre Entreprise</h2>
-                <p class="mb-4">Nous simplifions le recrutement pour les entreprises en utilisant des algorithmes avancés pour sélectionner les meilleurs candidats en fonction de vos critères. Ensuite, nous facilitons la mise en contact entre vous et les candidats choisis. Notre plateforme offre une solution efficace pour organiser des entretiens, partager des informations et finaliser les embauches. Nous vous permettons ainsi d'économiser du temps et des ressources tout en vous assurant que vous recrutez les talents qui correspondent le mieux à votre entreprise.</p>
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:focus:ring-sky-900">
-                    Postuler un offre d'emploi
-                    <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </a>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-                <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1">
-                <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
-            </div>
-        </div>
-    </section>
-    <section class="bg-white dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-                <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Dernières offres d'emploi .</h2>
-            </div>
+        <div class="icon-boxes position-relative">
+            <div class="container position-relative">
+                <div class="row gy-4 mt-5">
 
-            <div class="flex items-center justify-center flex-nowrap">
-                <button type="button" class="text-white border border-sky-600 bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-sky-500 dark:text-sky-500 dark:hover:text-white dark:hover:bg-sky-500 dark:bg-gray-900 dark:focus:ring-sky-800">Tous les categories</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">IT</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Finance</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Sante</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Marketing</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Marketing</button>
-                <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">Marketing</button>
-                <button type="button" class="text-sky-700 hover:text-white border border-sky-600 bg-white hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-sky-500 dark:text-sky-500 dark:hover:text-white dark:hover:bg-sky-500 dark:bg-gray-900 dark:focus:ring-sky-800"><i class="fa fa-arrow-right"></i></button>
-
-            </div>
-
-            <div class="space-y-8 lg:grid lg:grid-cols-4 sm:gap-6 xl:gap-10 lg:space-y-0 py-4">
-
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Développeur Fullstack</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Développeur Fullstack recherché pour créer des applications web performantes. Expérience en développement front-end et back-end....</p>
-                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-sky-800 bg-white rounded-lg border border-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
-                        Voir details
-                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Développeur Fullstack</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Développeur Fullstack recherché pour créer des applications web performantes. Expérience en développement front-end et back-end....</p>
-                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-sky-800 bg-white rounded-lg border border-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
-                        Voir details
-                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Développeur Fullstack</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Développeur Fullstack recherché pour créer des applications web performantes. Expérience en développement front-end et back-end....</p>
-                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-sky-800 bg-white rounded-lg border border-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
-                        Voir details
-                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Développeur Fullstack</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Développeur Fullstack recherché pour créer des applications web performantes. Expérience en développement front-end et back-end....</p>
-                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-sky-800 bg-white rounded-lg border border-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
-                        Voir details
-                        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <div class="flex justify-center py-4">
-                <a href="#" class="text-white border border-sky-600 bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-sky-500 dark:text-sky-500 dark:hover:text-white dark:hover:bg-sky-500 dark:bg-gray-900 dark:focus:ring-sky-800">Voir plus</a>
-            </div>
-        </div>
-    </section>
-    <section class="bg-sky-900 dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-            <div class="mx-auto max-w-screen-md sm:text-center">
-                <h2 class="text-white mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl dark:text-white">Inscrivez-vous à notre newsletter.</h2>
-                <p class="mx-auto mb-8 max-w-2xl font-light text-gray-300 md:mb-12 sm:text-xl dark:text-gray-400">Soyez toujours à jour ! Abonnez-vous à notre newsletter pour les dernières annonces.</p>
-                <form action="#">
-                    <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
-                        <div class="relative w-full">
-                            <label for="email" class="hidden mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Adresse Email</label>
-                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                            </div>
-                            <input class="block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:rounded-none sm:rounded-l-lg focus:ring-sky-500 focus:border-sky-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Email" type="email" id="email" required="">
+                    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bi bi-search"></i></div>
+                            <h4 class="title"><a href="#" class="stretched-link">Moteur Matching</a></h4>
                         </div>
-                        <div>
-                            <button type="submit" class="py-3 px-5 w-full text-sm font-medium text-center text-white rounded-lg border cursor-pointer bg-sky-700 border-sky-600 sm:rounded-none sm:rounded-r-lg hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">S'inscrire</button>
+                    </div><!--End Icon Box -->
+
+                    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bi bi-calendar4-week"></i></div>
+                            <h4 class="title"><a href="#" class="stretched-link">Gestion Entretiens</a></h4>
+                        </div>
+                    </div><!--End Icon Box -->
+
+                    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bi bi-graph-up-arrow"></i></div>
+                            <h4 class="title"><a href="" class="stretched-link">Suivi des Offres</a></h4>
+                        </div>
+                    </div><!--End Icon Box -->
+
+                    <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bi bi-gem"></i></div>
+                            <h4 class="title"><a href="" class="stretched-link">Gestion des Candidats</a></h4>
+                        </div>
+                    </div><!--End Icon Box -->
+
+                </div>
+            </div>
+        </div>
+
+        </div>
+    </section>
+    <!-- End Hero Section -->
+
+    <main id="main">
+
+        <!-- ======= About Us Section ======= -->
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Cap Careers pour les entreprises</h2>
+                    <p>Trouvez les Meilleurs Talents pour Votre Entreprise</p>
+                </div>
+
+                <div class="row gy-4">
+                    <div class="col-lg-6">
+                        <img src="{{ asset('assets/img/about.jpg')}}" class="img-fluid rounded-4 mb-4" alt="">
+                        <p>Nous simplifions le recrutement pour les entreprises en utilisant des algorithmes avancés pour sélectionner les meilleurs candidats en fonction de vos critères. Ensuite, nous facilitons la mise en contact entre vous et les candidats choisis. Notre plateforme offre une solution efficace pour organiser des entretiens, partager des informations et finaliser les embauches. </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="content ps-0 ps-lg-5">
+                            <p>
+                                Nous vous permettons d'économiser du temps et des ressources tout en vous assurant que vous recrutez les talents qui correspondent le mieux à votre entreprise.
+                            </p>
+                            <div class="position-relative mt-4">
+                                <img src="{{ asset('assets/img/about-2.jpg')}}" class="img-fluid rounded-4" alt="">
+                            </div>
                         </div>
                     </div>
-                    <div class="mx-auto max-w-screen-sm text-sm text-left text-gray-300 newsletter-form-footer dark:text-gray-300">Nous nous soucions de la protection de vos données. <a href="#" class="font-medium text-sky-600 dark:text-sky-200 hover:underline">Consultez notre Politique de Confidentialité</a>.</div>
-                </form>
+                </div>
+
             </div>
-        </div>
-    </section>
+        </section><!-- End About Us Section -->
+
+
+
+        <!-- ======= Stats Counter Section ======= -->
+        <section id="stats-counter" class="stats-counter">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row gy-4 align-items-center">
+
+                    <div class="col-lg-6">
+                        <img src="{{ asset('assets/img/stats-img.svg')}}" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <div class="stats-item d-flex align-items-center">
+                            <span data-purecounter-start="0" data-purecounter-end="840" data-purecounter-duration="1" class="purecounter"></span>
+                            <p><strong>Candidats</strong> </p>
+                        </div><!-- End Stats Item -->
+
+                        <div class="stats-item d-flex align-items-center">
+                            <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+                            <p><strong>Offres d'emploi</strong> </p>
+                        </div><!-- End Stats Item -->
+
+                        <div class="stats-item d-flex align-items-center">
+                            <span data-purecounter-start="0" data-purecounter-end="453" data-purecounter-duration="1" class="purecounter"></span>
+                            <p><strong>Profil acceptés</strong></p>
+                        </div><!-- End Stats Item -->
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Stats Counter Section -->
+
+
+
+        <!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>Témoignages</h2>
+                    <p>Des employeurs et des candidats satisfaits de notre plateforme</p>
+                </div>
+                <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper">
+
+                        <!-- Témoignage 1 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img flex-shrink-0" alt="Saul Goodman">
+                                        <div>
+                                            <h3>Saul Goodman</h3>
+                                            <h4>PDG & Fondateur</h4>
+                                            <div class="stars">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        Grâce à Cap Careers, nous avons trouvé les talents les plus qualifiés pour notre entreprise. Le processus de recrutement n'a jamais été aussi efficace !
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Témoignage 2 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/testimonials/testimonials-2.jpg')}}" class="testimonial-img flex-shrink-0" alt="Sara Wilsson">
+                                        <div>
+                                            <h3>Sara Wilsson</h3>
+                                            <h4>Designer</h4>
+                                            <div class="stars">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        Cap Careers m'a aidé à découvrir des opportunités de carrière incroyables. Je recommande cette plateforme à tous les chercheurs d'emploi !
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Témoignage 3 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/testimonials/testimonials-3.jpg')}}" class="testimonial-img flex-shrink-0" alt="Jena Karlis">
+                                        <div>
+                                            <h3>Jena Karlis</h3>
+                                            <h4>Propriétaire de Magasin</h4>
+                                            <div class="stars">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        Grâce à Cap Careers, j'ai pu trouver les employés les plus compétents pour mon entreprise. Un service exceptionnel !
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Témoignage 4 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ asset('assets/img/testimonials/testimonials-4.jpg')}}" class="testimonial-img flex-shrink-0" alt="Matt Brandon">
+                                        <div>
+                                            <h3>Matt Brandon</h3>
+                                            <h4>Freelancer</h4>
+                                            <div class="stars">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        Cap Careers m'a permis de trouver des opportunités de freelance passionnantes. Un service exceptionnel pour les travailleurs indépendants !
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+        <!-- End Testimonials Section -->
+
+
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-header">
+                    <h2>Contact</h2>
+                </div>
+
+                <div class="row gx-lg-0 gy-4">
+
+                    <div class="col-lg-4">
+
+                        <div class="info-container d-flex flex-column align-items-center justify-content-center">
+                            <div class="info-item d-flex">
+                                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                                <div>
+                                    <h4>Adresse:</h4>
+                                    <p>A108 Rue de la liberté, Paris</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="info-item d-flex">
+                                <i class="bi bi-envelope flex-shrink-0"></i>
+                                <div>
+                                    <h4>Email:</h4>
+                                    <p>info@example.com</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="info-item d-flex">
+                                <i class="bi bi-phone flex-shrink-0"></i>
+                                <div>
+                                    <h4>Téléphone:</h4>
+                                    <p>+1 5589 55488 55</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="info-item d-flex">
+                                <i class="bi bi-clock flex-shrink-0"></i>
+                                <div>
+                                    <h4>Horaires d'ouverture:</h4>
+                                    <p>Lun-Sam: 08AM - 19PM</p>
+                                </div>
+                            </div><!-- End Info Item -->
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-8">
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Votre nom" required>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Votre email" required>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Sujet" required>
+                            </div>
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
+                            </div>
+                            <div class="my-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Envoyer</button></div>
+                        </form>
+                    </div><!-- End Contact Form -->
+
+                </div>
+
+            </div>
+        </section><!-- End Contact Section -->
+
+    </main><!-- End #main -->
 {% endblock %}

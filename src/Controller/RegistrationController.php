@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Candidat;
+use App\Entity\CandidatInfo;
 use App\Entity\Employeur;
 use App\Form\CandidatRegistrationFormType;
 use App\Form\EmployeurRegistrationFormType;
@@ -48,7 +49,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $candidatInfo = new CandidatInfo();
+            $candidat->setCandidatInfo($candidatInfo);
             $entityManager->persist($candidat);
             $entityManager->flush();
 

@@ -23,6 +23,12 @@ class EmployeurRegistrationFormType extends AbstractType
             ->add('phone', TextType::class, [
                 'label' => 'Numéro téléphone de l’entreprise'
             ])
+            ->add('ville', TextType::class, [
+                'label' => 'Ville'
+            ])
+            ->add('codePostal', TextType::class, [
+                'label' => 'Code postal'
+            ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse du siège'
             ])

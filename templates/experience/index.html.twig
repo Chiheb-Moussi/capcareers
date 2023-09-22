@@ -1,0 +1,50 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h2>Mes Experiences</h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Entreprise</th>
+                    <th>Titre</th>
+                    <th>Nombre d'Année</th>
+                    <th>Date début</th>
+                    <th>Date de fin</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for experience in experiences %}
+                    <tr>
+                        <td>{{ experience.nomEntreprise }}</td>
+                        <td>{{ experience.titre }}</td>
+                        <td>{{ experience.nombreAnnee }}</td>
+                        <td>{{ experience.dateDebut|date('d/m/y') }}</td>
+                        <td>{{ experience.dateFin|date('d/m/y') }}</td>
+                        <td>
+                            <a href="{{ path('app_experience_show', {'id': experience.id}) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            <a href="{{ path('app_experience_edit', {'id': experience.id}) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                            {{ include('experience/_delete_form.html.twig') }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Pas d'experiences renseignées</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ path('app_experience_new') }}" class="btn btn-primary">Ajouter</a>
+    </div>
+{% endblock %}
+
+
+
+

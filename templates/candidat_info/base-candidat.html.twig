@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidat{% endblock %}
+
+{% block body %}
+    <div class="container min-vh-100">
+        <div class="row py-5">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="/candidat/info/" class="list-group-item list-group-item-action {% if left_menu =='profile' %}active{% endif %}">Mon Profile</a>
+                    <a href="/candidat/info/edit/" class="list-group-item list-group-item-action  {% if left_menu =='Mes informations' %}active{% endif %}">Mes informations</a>
+                    <a href="/experience" class="list-group-item list-group-item-action  {% if left_menu =='experience' %}active{% endif %}">Mes experiences</a>
+                    <a href="/formation" class="list-group-item list-group-item-action  {% if left_menu =='formation' %}active{% endif %}">Mes formations</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="w-100 bg-white rounded-lg shadow-lg border mb-0 md:mb-0 max-md-width-xl ">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
