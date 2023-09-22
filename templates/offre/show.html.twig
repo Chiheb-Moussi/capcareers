@@ -1,0 +1,65 @@
+{% extends 'employeur/base-employeur.html.twig' %}
+
+
+{% block content %}
+    <h1 class="mb-4">Offre</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Intitulé du poste</th>
+                <td>{{ offre.titre }}</td>
+            </tr>
+            <tr>
+                <th>Secteur d'activité</th>
+                <td>{{ offre.secteur.titre }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ offre.category.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description du poste</th>
+                <td>{{ offre.description }}</td>
+            </tr>
+            <tr>
+                <th>Autre Exigences demandées</th>
+                <td>{{ offre.autreExigences }}</td>
+            </tr>
+            <tr>
+                <th>Autre Avantages</th>
+                <td>{{ offre.autreAvantages }}</td>
+            </tr>
+            <tr>
+                <th>Démarrage</th>
+                <td>{{ offre.demarrage ? offre.demarrage|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Profil recherché</th>
+                <td>{{ offre.profil }}</td>
+            </tr>
+            <tr>
+                <th>Profil recherché</th>
+                <td>{{ offre.typeContrat }}</td>
+            </tr>
+            {% if offre.typeContrat =='CDI' %}
+                <tr>
+                    <th>Salaire</th>
+                    <td>{{ offre.salaire }}</td>
+                </tr>
+            {% else %}
+            <tr>
+                <th>TJM</th>
+                <td>{{ offre.tjm }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Lieu de la mission</th>
+                <td>{{ offre.lieu }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_offre_index') }}" class="btn btn-primary">Retourner</a>
+
+{% endblock %}

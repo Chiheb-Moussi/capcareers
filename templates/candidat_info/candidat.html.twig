@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ candidat.getFullName() }}{% endblock %}
+
+{% block body %}
+    <div class="container min-vh-100 py-5">
+        <div class="d-flex mb-3 justify-content-between">
+            <h3 class="mb-3">{{ candidat.getFullName() }} </h3>
+
+            <a href="?intressted={{ intressted=='1' ?'0':'1' }}" class="btn btn-{{ intressted=='0' ?'primary':'danger' }}" style="font-weight: 600">{{ intressted=='0'? 'Intéressé par ce profil ?': 'Désintéressé par ceprofile'}}</a>
+        </div>
+
+
+        <div class="d-flex flex-column gap-3 py-3">
+            <div class="d-flex gap-5">
+                <div>
+                    <div class="mb-2">
+                        <strong>Profil :</strong> {{ candidat.candidatInfo.typeProfile }}
+                    </div>
+                    <div class="mb-2">
+                        <strong>Nmbre d'experience :</strong> {{ candidat.candidatInfo.nombreExp }}
+                    </div>
+                    <div class="mb-2">
+                        <strong>Ville :</strong> {{ candidat.ville }}
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-2">
+                        <strong>Type de contrat :</strong> {{ candidat.candidatInfo.typeContrat }}
+                    </div>
+                    <div class="mb-2">
+                        {% if candidat.candidatInfo.typeContrat =="CDI" %}
+                            <strong>Salaire :</strong> {{ candidat.candidatInfo.salaire }}
+                        {% else %}
+                            <strong>TJM :</strong> {{ candidat.candidatInfo.tjm }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <h4>Mes Experiences</h4>
+            <div class="accordion" id="accordionExample">
+                {% for experience in candidat.candidatInfo.experiences %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapse_{{ experience.id }}">
+                            {{  experience.titre }} / {{ experience.nomEntreprise }}
+                        </button>
+                    </h2>
+                    <div id="collapse_{{ experience.id }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body flex flex-col">
+                            <div>Date début: {{ experience.dateDebut|date('d/m/y') }}</div>
+                            <div>Date de fin: {{ experience.dateFin|date('d/m/y') }}</div>
+                            <div>Nombre d'Année: {{ experience.nombreAnnee }}</div>
+                            <div>{{ experience.description }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <h4>Mes Formations</h4>
+            <div class="accordion" id="accordionExample">
+                {% for formation in candidat.candidatInfo.formations %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapse_{{ formation.id }}">
+                                {{  formation.titre }}
+                            </button>
+                        </h2>
+                        <div id="collapse_{{ formation.id }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body flex flex-col">
+                                <div>Date de formationt: {{ formation.dateFormation|date('d/m/y') }}</div>
+                                <div>{{ formation.description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

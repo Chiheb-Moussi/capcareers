@@ -26,6 +26,12 @@ class CandidatRegistrationFormType extends AbstractType
             ->add('phone', TextType::class, [
                 'label' => 'Numéro de téléphone'
             ])
+            ->add('ville', TextType::class, [
+                'label' => 'Ville'
+            ])
+            ->add('codePostal', TextType::class, [
+                'label' => 'Code postal'
+            ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse'
             ])
@@ -50,6 +56,11 @@ class CandidatRegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('confirmPassword', PasswordType::class, [
+                'mapped' => false,
+                'required' => true,
+            ]);
+
         ;
     }
 

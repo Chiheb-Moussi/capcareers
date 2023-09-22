@@ -1,0 +1,41 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        {{ form_start(form) }}
+        <div class="space-y-4 md:space-y-6">
+            <h2>Mes informations</h2>
+            {{ form_row(form._token) }}
+
+
+            <div  class="mb-3">
+                {{ form_label(form.disponibilite, 'Disponibilité', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.disponibilite, {'attr': {'type': 'text', 'class': 'form-control datepicker'}}) }}
+            </div>
+            <div  class="mb-3">
+                {{ form_label(form.tjm, 'TJM', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.tjm, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div  class="mb-3">
+                {{ form_label(form.typeProfile, 'Type profile', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.typeProfile, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div  class="mb-3">
+            {{ form_label(form.nombreExp, 'Nombre d\'Expérience', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+            {{ form_widget(form.nombreExp, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div  class="mb-3">
+            {{ form_label(form.typeContrat, 'Type de contrat souhaité', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+            {{ form_widget(form.typeContrat, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="formFileSm" class="form-label">Mon CV</label>
+                <input class="form-control " id="formFileSm" type="file">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 fw-bold text-sm px-5 py-2.5 text-center mt-3">Modifier</button>
+        </div>
+        {{ form_end(form, {render_rest: false}) }}
+    </div>
+{% endblock %}
+

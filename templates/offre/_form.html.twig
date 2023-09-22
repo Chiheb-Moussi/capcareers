@@ -1,0 +1,87 @@
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        {{ form_start(form) }}
+        <div class="space-y-4 md:space-y-6">
+            <h2>Offre d'emploi</h2>
+            {{ form_row(form._token) }}
+
+            <div class="mb-3">
+                <label for="{{ form.titre.vars.id }}" class="form-label">Intitulé du poste</label>
+                {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.secteur.vars.id }}" class="form-label">Secteur d’activité</label>
+                {{ form_widget(form.secteur, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.category.vars.id }}" class="form-label">Catégorie</label>
+                {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.description.vars.id }}" class="form-label">Description du poste</label>
+                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.autreExigences.vars.id }}" class="form-label">Autres exigences demandées</label>
+                {{ form_widget(form.autreExigences, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.autreAvantages.vars.id }}" class="form-label">Autres avantages</label>
+                {{ form_widget(form.autreAvantages, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Skills demandés</label>
+                {{ form_widget(form.skills, {'attr': {'class': 'form-check-input select2 w-100', 'multiple': 'multiple'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.demarrage, 'Démarrage', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.demarrage, {'attr': {'type': 'text', 'class': 'form-control datepicker'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.profil, 'Profil recherché', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.profil, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div  class="mb-3">
+                {{ form_label(form.typeContrat, 'Type de contrat', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.typeContrat, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3" id="salaire">
+                {{ form_label(form.salaire, 'Salaire', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.salaire, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3" id="tjm">
+                {{ form_label(form.tjm, 'TJM', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.tjm, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.lieu, 'Lieu de la mission', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}}) }}
+                {{ form_widget(form.lieu, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold text-sm px-5 py-2.5 text-center mt-3">Enregistrer</button>
+        </div>
+        {{ form_end(form, {render_rest: false}) }}
+        <a href="{{ path('app_offre_index') }}">Retourner</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $( document ).ready(function() {
+            $('#offre_typeContrat').change(function (e){
+                const value = e.target.value;
+                if (value ==='CDI') {
+                    $('#salaire').show();
+                    $('#tjm').hide();
+                }else {
+                    $('#salaire').hide();
+                    $('#tjm').show();
+                }
+            })
+            $('#offre_typeContrat').trigger('change');
+        });
+    </script>
+{% endblock %}
