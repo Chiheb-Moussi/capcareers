@@ -1,0 +1,43 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+<div class="col-md-9">
+<div class="w-100 bg-white rounded-lg shadow-lg border mb-0 md:mb-0 max-md-width-xl ">
+
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h1>Liste Catégories</h1>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Secteur d'activité</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ category.titre }}</td>
+                        <td>{{ category.secteur.titre }}</td>
+                        <td>
+                            <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
+                            <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                            {{ include('admin/category/_delete_form.html.twig') }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                    <td colspan="5">Pas de Catégories renseignées</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ path('app_category_new') }}" class="btn btn-primary">Ajouter</a>
+    </div>
+</div></div>
+{% endblock %}
