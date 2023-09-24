@@ -58,12 +58,12 @@ class IntresstedCandidats
     public function getStatusHtml(): ?string
     {
         if(self::STATUS_EN_ATTENTE === $this->status) {
-            return "<div class='badge bg-warning text-white '>$this->status</div>";
+            return "<div class='badge bg-warning text-white text-lg'>$this->status</div>";
         }
         if(self::STATUS_ACCEPTE === $this->status) {
-            return "<div class='badge bg-success text-white '>$this->status</div>";
+            return "<div class='badge bg-success text-white text-lg'>$this->status</div>";
         }
-        return "<div class='badge bg-danger text-white '>$this->status</div>";
+        return "<div class='badge bg-danger text-white text-lg'>$this->status</div>";
     }
 
     public function setStatus(?string $status): static
