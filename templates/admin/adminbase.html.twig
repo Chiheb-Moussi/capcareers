@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
+    {% block style %}{% endblock %}
 </head>
 
 <body id="page-top">
@@ -36,7 +36,7 @@
 
         <!-- Main Content -->
         <div id="content">
-
+            {% include 'admin/includes/topbar.html.twig' %}
             {% block body %}{% endblock %}
 
         </div>
@@ -93,7 +93,7 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
-
+{% block scripts %}{% endblock %}
 </body>
 
 </html>
