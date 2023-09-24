@@ -18,7 +18,7 @@
                         <strong>Profil :</strong> {{ candidat.candidatInfo.typeProfile }}
                     </div>
                     <div class="mb-2">
-                        <strong>Nmbre d'experience :</strong> {{ candidat.candidatInfo.nombreExp }}
+                        <strong>Nombre d'experience :</strong> {{ candidat.candidatInfo.nombreExp }}
                     </div>
                     <div class="mb-2">
                         <strong>Ville :</strong> {{ candidat.ville }}
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <h4>Mes Experiences</h4>
+            <h4>Experiences</h4>
             <div class="accordion" id="accordionExample">
                 {% for experience in candidat.candidatInfo.experiences %}
                 <div class="accordion-item">
@@ -57,7 +57,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <h4>Mes Formations</h4>
+            <h4>Formations</h4>
             <div class="accordion" id="accordionExample">
                 {% for formation in candidat.candidatInfo.formations %}
                     <div class="accordion-item">
