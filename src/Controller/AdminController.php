@@ -25,18 +25,20 @@ class AdminController extends AbstractController
     #[Route('/admin/candidats', name: 'app_admin_candidats')]
     public function candidats(IntresstedOffreRepository $intresstedOffreRepository, IntresstedCandidatsRepository $intresstedCandidatsRepository): Response
     {
+        //$intresstedOffres ça represente la liste des candidats qui sont intéressé par des des offres
         $intresstedOffres = $intresstedOffreRepository->findAll();
         $data = [];
         foreach ($intresstedOffres as $intresstedOffre) {
             $employeur = $intresstedOffre->getOffre()->getEmployeur();
             $candidat = $intresstedOffre->getCandidat();
+            //ici on verifie si il y a matching entre le candidat, l'offre  avec le l'employeur et le candidat interessé
             $matching = $intresstedCandidatsRepository->findOneBy(['employeur'=>$employeur, 'candidat' => $candidat]);
             $data[] = [
                 'id' => $intresstedOffre->getId(),
                 'candidat' => $candidat,
                 'offre' => $intresstedOffre->getOffre(),
                 'employeur' => $employeur,
-                'matching' => ($matching !== null),
+                'matching' => ($matching !== null),// on revoie une valeur boolean pour verifier si il'ya matching
                 'status' => $intresstedOffre->getStatusHtml(),
             ];
         }

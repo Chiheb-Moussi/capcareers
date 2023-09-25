@@ -68,10 +68,13 @@ class CandidatInfoController extends AbstractController
     {
         $intressted = $request->query->get('intressted', '0');
         $employeur = $this->getUser();
-
-
+        //l'employeur par défaut il ne peux voir les informations privées de candidats
+        $canSeeCandidatPrivateInfo = false;
         if ($employeur instanceof Employeur) {
             $intresstedCandidats = $intresstedCandidatsRepository->findOneBy(['employeur'=>$employeur,'candidat'=>$candidat]);
+            //si l'employeur connecté est intéressé par le profile de candidat et le cap a accepté de donner le droit à l'employeur de voir les infos de candidat
+            $canSeeCandidatPrivateInfo = $intresstedCandidats !==null &&  $intresstedCandidats->getStatus() === IntresstedCandidats::STATUS_ACCEPTE;
+
             if ($intressted === '1') {
                 if(!$intresstedCandidats) {
                     $intresstedCandidats = new IntresstedCandidats();
@@ -93,6 +96,7 @@ class CandidatInfoController extends AbstractController
         return $this->render('candidat_info/candidat.html.twig', [
             'candidat' => $candidat,
             'intressted' => $intressted,
+            'canSeeCandidatPrivateInfo' => $canSeeCandidatPrivateInfo,
         ]);
     }
 
