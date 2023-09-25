@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container min-vh-100 py-5">
         <div class="d-flex mb-3 justify-content-between">
-            <h3 class="mb-3">{{ candidat.getFullName() }} </h3>
+            <h3 class="mb-3">{{ candidat.profession }} </h3>
 
             <a href="?intressted={{ intressted=='1' ?'0':'1' }}" class="btn btn-{{ intressted=='0' ?'primary':'danger' }}" style="font-weight: 600">{{ intressted=='0'? 'Intéressé par ce profil ?': 'Désintéressé par ceprofile'}}</a>
         </div>
@@ -14,11 +14,22 @@
         <div class="d-flex flex-column gap-3 py-3">
             <div class="d-flex gap-5">
                 <div>
+                    {% if canSeeCandidatPrivateInfo %}
+                        <div class="mb-2">
+                            <strong>Nom et prénom :</strong> {{ candidat }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>Téléphone :</strong> {{ candidat.phone }}
+                        </div>
+                        <div class="mb-2">
+                            <strong>Email :</strong> {{ candidat.email }}
+                        </div>
+                    {% endif %}
                     <div class="mb-2">
                         <strong>Profil :</strong> {{ candidat.candidatInfo.typeProfile }}
                     </div>
                     <div class="mb-2">
-                        <strong>Nmbre d'experience :</strong> {{ candidat.candidatInfo.nombreExp }}
+                        <strong>Nombre d'experience :</strong> {{ candidat.candidatInfo.nombreExp }}
                     </div>
                     <div class="mb-2">
                         <strong>Ville :</strong> {{ candidat.ville }}
@@ -37,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <h4>Mes Experiences</h4>
+            <h4>Experiences</h4>
             <div class="accordion" id="accordionExample">
                 {% for experience in candidat.candidatInfo.experiences %}
                 <div class="accordion-item">
@@ -57,7 +68,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <h4>Mes Formations</h4>
+            <h4>Formations</h4>
             <div class="accordion" id="accordionExample">
                 {% for formation in candidat.candidatInfo.formations %}
                     <div class="accordion-item">

@@ -1,0 +1,25 @@
+
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+<div class="col-md-9">
+<div class="w-100 bg-white rounded-lg shadow-lg border mb-0 md:mb-0 max-md-width-xl ">
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h1 class="mb-4">Details Catégorie </h1>
+
+        <table class="table table-striped">
+            <tbody>
+
+            <tr>
+                <th>Titre</th>
+                <td>{{ category.titre }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_category_index') }}" class="btn btn-primary">Retourner</a>
+    </div>
+</div>
+</div>
+{% endblock %}

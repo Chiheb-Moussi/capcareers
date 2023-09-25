@@ -1,0 +1,77 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block title %}Employeurs{% endblock %}
+{% block style %}
+    <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Employeurs</h1>
+        <p class="mb-4">Cette tableau affiche la liste des employeurs intéressés par des candidats</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Employeur</th>
+                            <th>Candidat</th>
+                            <th>Profession de candidat</th>
+                            <th>Profile de candidat</th>
+                            <th>TJM/Salaire de candidat</th>
+                            <th>Experience de candidat</th>
+                            <th>Match</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for line in data %}
+                            <tr>
+                                <td>{{ line.employeur.societe }}</td>
+                                <td>{{ line.candidat }}</td>
+                                <td>{{ line.candidat.candidatInfo.profession }}</td>
+                                <td>{{ line.candidat.candidatInfo.typeProfile }}</td>
+                                <td>{{ line.candidat.candidatInfo.tjm ?? line.candidat.candidatInfo.salaire }}</td>
+                                <td>{{ line.candidat.candidatInfo.nombreExp }}</td>
+                                <td>{{ line.matching ? '<i class="fa fa-star text-warning"></i>' :''}}</td>
+                                <td>{{ line.status|raw }}</td>
+                                <td><a href="/admin/employeurs/{{ line.id }}" class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+{% endblock %}
+{% block scripts %}
+    <!-- Page level plugins -->
+    <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script >
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                language: {
+                    url: "/admin/datatables-fr.json"
+                }
+            });
+        });
+    </script>
+{% endblock %}

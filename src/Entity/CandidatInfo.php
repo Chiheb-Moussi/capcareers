@@ -59,6 +59,9 @@ class CandidatInfo
     #[ORM\Column(nullable: true)]
     private ?float $salaire = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profession = null;
+
     public function __construct()
     {
         $this->candidatInfoSkills = new ArrayCollection();
@@ -254,6 +257,18 @@ class CandidatInfo
     public function setSalaire(?float $salaire): static
     {
         $this->salaire = $salaire;
+
+        return $this;
+    }
+
+    public function getProfession(): ?string
+    {
+        return $this->profession;
+    }
+
+    public function setProfession(?string $profession): static
+    {
+        $this->profession = $profession;
 
         return $this;
     }

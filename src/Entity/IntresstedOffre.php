@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: IntresstedOffreRepository::class)]
 class IntresstedOffre
 {
+    const STATUS_EN_ATTENTE = 'En attente';
+    const STATUS_ACCEPTE = 'Accepté';
+    const STATUS_REFUSE = 'Refusé';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -70,6 +73,17 @@ class IntresstedOffre
     public function getStatus(): ?string
     {
         return $this->status;
+    }
+
+    public function getStatusHtml(): ?string
+    {
+        if(self::STATUS_EN_ATTENTE === $this->status) {
+            return "<div class='badge bg-warning text-white text-lg'>$this->status</div>";
+        }
+        if(self::STATUS_ACCEPTE === $this->status) {
+            return "<div class='badge bg-success text-white text-lg'>$this->status</div>";
+        }
+        return "<div class='badge bg-danger text-white text-lg'>$this->status</div>";
     }
 
     public function setStatus(?string $status): static
