@@ -24,6 +24,7 @@
     <link href="{{ asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/main.css')}}" rel="stylesheet">
@@ -33,6 +34,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js" integrity="sha512-s5u/JBtkPg+Ff2WEr49/cJsod95UgLHbC00N/GglqdQuLnYhALncz8ZHiW/LxDRGduijLKzeYb7Aal9h3codZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         $( function() {
             $(".datepicker").datepicker({
@@ -47,6 +50,24 @@
                 dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"], // Short names of days
                 dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"], // Minimal names of days
                 weekHeader: "Sem.", // Week header text
+            });
+            $(".datepickertime").datetimepicker({
+                dateFormat: "dd/mm/yy", // Set the date format to French format
+                closeText: "Fermer", // Text for the close button
+                prevText: "Précédent", // Text for the previous month button
+                nextText: "Suivant", // Text for the next month button
+                currentText: "Maintenant", // Text for the current day button
+                monthNames: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"], // Names of months
+                monthNamesShort: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"], // Short names of months
+                dayNames: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"], // Names of days
+                dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"], // Short names of days
+                dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"], // Minimal names of days
+                weekHeader: "Sem.", // Week header text
+                timeOnlyTitle: 'Sélectionner l\'heure',
+                timeText: 'Heure',
+                hourText: 'Heure',
+                minuteTexte: 'Minutes',
+                secondText: 'Secondes',
             });
             $('.select2').select2();
 

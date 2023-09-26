@@ -1,0 +1,105 @@
+{% extends 'employeur/base-employeur.html.twig' %}
+{% block style %}
+    <link href="{{ asset('assets/css/calendar.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div style="position: relative">
+        <div id="calendar"></div>
+
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('assets/js/plugin/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugin/fullcalendar/fr.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendar = $('#calendar').fullCalendar({
+                lang: 'fr',
+
+                //height: '100%',
+
+
+                header: {
+                    left: 'title', //,today
+                    center: 'prev, next, today',
+                    right: 'month, agendaWeek, agenDay' //month, agendaDay,
+                },
+
+
+
+                events: [
+                    {
+                        title: 'All Day Event',
+                        start: '2023-09-01',
+                    },
+                    {
+                        title: 'Long Event',
+                        start: '2023-09-07',
+                        end: '2023-09-10'
+                    },
+                    {
+                        id: 999,
+                        title: 'Repeating Event',
+                        start: '2023-09-09T16:00:00'
+                    },
+                    {
+                        id: 999,
+                        title: 'Repeating Event',
+                        start: '2023-09-16T16:00:00'
+                    },
+                    {
+                        title: 'Conference',
+                        start: '2023-09-11',
+                        end: '2023-09-13'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2023-09-12T10:30:00',
+                        end: '2023-09-12T12:30:00'
+                    },
+                    {
+                        title: 'Lunch',
+                        start: '2023-09-12T12:00:00'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2023-09-12T14:30:00'
+                    },
+                    {
+                        title: 'Happy Hour',
+                        start: '2023-09-12T17:30:00'
+                    },
+                    {
+                        title: 'Dinner',
+                        start: '2023-09-12T20:00:00'
+                    },
+                    {
+                        title: 'Birthday Party',
+                        start: '2023-09-13T07:00:00'
+                    },
+                    {
+                        title: 'Click for Google',
+                        url: 'http://google.com/',
+                        start: '2023-09-28'
+                    }
+                ],
+                eventRender: function (event, element, icon) {
+                    if (!event.description == "") {
+                        element.find('.fc-event-title').append("<br/><span class='ultra-light'>" + event.description + "</span>");
+                    }
+                    if (!event.icon == "") {
+                        element.find('.fc-event-title').append("<i class='air air-top-right fa " + event.icon + " '></i>");
+                    }
+                }
+
+
+            });
+
+            // render the calendar
+        });
+    </script>
+{% endblock %}

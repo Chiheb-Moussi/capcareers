@@ -1,0 +1,45 @@
+{% extends 'employeur/base-employeur.html.twig' %}
+
+{% block content %}
+    <form method="post">
+    <div class="space-y-4 md:space-y-6">
+
+        <div>
+            <label class="form-label" for="candidat">Candidat</label>
+            <select id="candidat" class="form-control" name="candidat">
+                {% for intresstedCandidat in intresstedCandidats %}
+                    <option value="{{ intresstedCandidat.candidat.id }}">{{ intresstedCandidat.candidat }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="form-label" for="candidat">Offre</label>
+            <select id="offre" class="form-control" name="offre">
+                {% for offre in offres %}
+                    <option value="{{ offre.id }}">{{ offre.titre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="duration" class="form-label">Durée en minutes</label>
+            <input id="duration" type="number" class=" form-control" name="duration" />
+        </div>
+        <div>
+            <label for="date1" class="form-label">Proposition de date 1</label>
+            <input id="date1" type="text" class="datepickertime form-control" name="date1" />
+        </div>
+        <div>
+            <label for="date2" class="form-label">Proposition de date 2</label>
+            <input id="date2" type="text" class="datepickertime form-control" name="date2" />
+        </div>
+        <div>
+            <label for="date3" class="form-label">Proposition de date 3</label>
+            <input id="date3" type="text" class="datepickertime form-control" name="date3" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 fw-bold text-sm px-5 py-2.5 text-center mt-3">Ajouter</button>
+
+    </div>
+    </form>
+
+{% endblock %}

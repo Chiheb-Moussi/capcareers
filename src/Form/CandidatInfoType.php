@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class CandidatInfoType extends AbstractType
 {
@@ -56,6 +57,9 @@ class CandidatInfoType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
             ])
+            ->add('cv', FileType::class, [
+                'label' => 'Mon CV',
+            ]);
         ;
     }
 
