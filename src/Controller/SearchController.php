@@ -43,32 +43,70 @@ class SearchController extends AbstractController
         $maxSalaire = $request->query->get('maxSalaire', '');
         $skillsIds = $request->query->all('skills', []);
         $offresQuery = $this->offreRepository->createQueryBuilder('o');
-        if($search) {
-            $offresQuery->where('o.titre like :search')
-                ->setParameter('search', '%'.$search.'%');
-        }
-        if($secteur) {
-            $offresQuery->where('o.secteur = :secteur')
-                ->setParameter('secteur', $secteur);
-        }
-        if($category) {
-            $offresQuery->where('o.category = :category')
-                ->setParameter('category', $category);
-        }
-        if($profil) {
-            $offresQuery->where('o.profil = :profil')
-                ->setParameter('profil', $profil);
-        }
-        if($favourite) {
-            $candidat = $this->getUser();
-            if($candidat instanceof Candidat) {
-                $offresQuery->leftJoin('o.intresstedOffres', 'io')
-                    ->andWhere('io.candidat = :candidat')
-                    ->setParameter('candidat', $candidat->getId());
-            }
+
+if ($search) {
+    $offresQuery->andWhere('o.titre LIKE :search')
+        ->setParameter('search', '%' . $search . '%');
+}
+
+if ($secteur) {
+    $offresQuery->andWhere('o.secteur = :secteur')
+        ->setParameter('secteur', $secteur);
+}
+
+if ($category) {
+    $offresQuery->andWhere('o.category = :category')
+        ->setParameter('category', $category);
+}
+
+if ($profil) {
+    $offresQuery->andWhere('o.profil = :profil')
+        ->setParameter('profil', $profil);
+}
+
+if ($favourite) {
+    $candidat = $this->getUser();
+    if ($candidat instanceof Candidat) {
+        $offresQuery->leftJoin('o.intresstedOffres', 'io')
+            ->andWhere('io.candidat = :candidat')
+            ->setParameter('candidat', $candidat);
+    }
+}
+
+if (!empty($skillsIds)) {
+    $offresQuery->join('o.skills', 's')
+        ->andWhere($offresQuery->expr()->in('s.id', ':skillIds'))
+        ->setParameter('skillIds', $skillsIds);
+}
+
+if ($typeContrat) {
+    $offresQuery->andWhere('o.typeContrat = :typeContrat')
+        ->setParameter('typeContrat', $typeContrat);
+
+    if ($typeContrat === 'Freelance') {
+        if ($minTjm) {
+            $offresQuery->andWhere('o.tjm >= :tjmMin')
+                ->setParameter('tjmMin', $minTjm);
         }
 
-        $allOffres = $offresQuery->getQuery();
+        if ($maxTjm) {
+            $offresQuery->andWhere('o.tjm <= :tjmMax')
+                ->setParameter('tjmMax', $maxTjm);
+        }
+    } else {
+        if ($minSalaire) {
+            $offresQuery->andWhere('o.salaire >= :salaireMin')
+                ->setParameter('salaireMin', $minSalaire);
+        }
+
+        if ($maxSalaire) {
+            $offresQuery->andWhere('o.salaire <= :salaireMax')
+                ->setParameter('salaireMax', $maxSalaire);
+        }
+    }
+}
+
+$allOffres = $offresQuery->getQuery();
         $offres = $paginator->paginate(
             $allOffres,
             $request->query->getInt('page', 1),
@@ -92,6 +130,7 @@ class SearchController extends AbstractController
         return $this->render('search/index.html.twig', [
             'offres' => $offres,
             'skills' => $skills,
+            'skillsIds'=>$skillsIds,
             'profiles' => $profiles,
             'profil' => $profil,
             'secteurs' => $secteurs,
@@ -180,12 +219,12 @@ class SearchController extends AbstractController
                 if ($verifCandidatInfo) {
                     $candidatsQuery
                         ->andWhere('co.tjm >= :tjmMin')
-                        ->setParameter('tjm', $minTjm);
+                        ->setParameter('tjmMin', $minTjm);
                 } else {
                     $candidatsQuery
                         ->leftJoin('c.candidatInfo', 'co')
-                        ->andWhere('co.tjm >= :tjmMax')
-                        ->setParameter('tjm', $tjmMin);
+                        ->andWhere('co.tjm >= :tjmMin')
+                        ->setParameter('tjmMin', $tjmMin);
                 }
             }
            
@@ -194,12 +233,12 @@ class SearchController extends AbstractController
                 if ($verifCandidatInfo) {
                     $candidatsQuery
                         ->andWhere('co.tjm <= :tjmMax')
-                        ->setParameter('tjm', $maxTjm);
+                        ->setParameter('tjmMax', $maxTjm);
                 } else {
                     $candidatsQuery
                         ->leftJoin('c.candidatInfo', 'co')
                         ->andWhere('co.tjm <= :tjmMax')
-                        ->setParameter('tjm', $maxTjm);
+                        ->setParameter('tjmMax', $maxTjm);
                 }
             }
         }else{
@@ -207,13 +246,13 @@ class SearchController extends AbstractController
         {
             if ($verifCandidatInfo) {
                 $candidatsQuery
-                    ->andWhere('co.salaire >= :salaire')
-                    ->setParameter('salaire', $minSalaire);
+                    ->andWhere('co.salaire >= :salaireMin')
+                    ->setParameter('salaireMin', $minSalaire);
             } else {
                 $candidatsQuery
                     ->leftJoin('c.candidatInfo', 'co')
-                    ->andWhere('co.salaire >= :salaire')
-                    ->setParameter('salaire', $minSalaire);
+                    ->andWhere('co.salaire >= :salaireMax')
+                    ->setParameter('salaireMax', $minSalaire);
             }
         }
        
@@ -221,8 +260,8 @@ class SearchController extends AbstractController
         {
             if ($verifCandidatInfo) {
                 $candidatsQuery
-                    ->andWhere('co.salaire <= :salaireMin')
-                    ->setParameter('salaireMin', $maxSalaire);
+                    ->andWhere('co.salaire <= :salaireMax')
+                    ->setParameter('salaireMax', $maxSalaire);
             } else {
                 $candidatsQuery
                     ->leftJoin('c.candidatInfo', 'co')

@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/candidat/info')]
 class CandidatInfoController extends AbstractController
@@ -45,6 +46,7 @@ class CandidatInfoController extends AbstractController
     #[Route('/edit', name: 'app_candidat_info_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+     
         /** @var Candidat $candidat */
         $candidat = $this->getUser();
         $candidatInfo = $candidat->getCandidatInfo();
@@ -52,14 +54,38 @@ class CandidatInfoController extends AbstractController
         $form = $this->createForm(CandidatInfoType::class, $candidatInfo);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $cvFile = $request->files->get('cv');
+          //  dd($this->getParameter('kernel.project_dir') . '/public/uploads');
+            if ($cvFile instanceof UploadedFile) {
+                $uniqueFolderName = $candidat->getId();
+
+                // Define the upload directory with the unique folder name
+                $uploadDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $uniqueFolderName;
+    
+                // Create the directory if it doesn't exist
+                if (!file_exists($uploadDirectory)) {
+                    mkdir($uploadDirectory, 0755, true); // Recursive directory creation
+                }
+                // Handle the uploaded file here
+                // ...
+                $newFileName = $cvFile->getClientOriginalName();
+
+                // Move the uploaded file to the public/uploads directory
+               
+                $cvFile->move($uploadDirectory, $newFileName);
+                $candidatInfo->setCv($newFileName);
+            }
+            
             $entityManager->flush();
         }
-
+       
         return $this->render('candidat_info/edit.html.twig', [
             'candidat_info' => $candidatInfo,
             'form' => $form,
-            'left_menu'=> 'Mes informations'
+            'left_menu'=> 'Mes informations',
+            'cv'=>$candidatInfo->getCv()
         ]);
     }
 
