@@ -31,7 +31,7 @@
                         <select id="skills" class="form-control select2" name="skills[]" multiple="multiple">
                             <option value=""></option>
                             {% for skill in skills %}
-                                <option value="{{ skill.id }}" >{{ skill.titre }}</option>
+                                <option value="{{ skill.id }}"  {% if skill.id in skillsIds %}selected{% endif %}>{{ skill.titre }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -60,7 +60,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Recherche</button>
                     <button type="reset" class="btn btn-secondary ">Supprimer</button>
-
                 </div>
             </form>
             <div class="col-md-9">
