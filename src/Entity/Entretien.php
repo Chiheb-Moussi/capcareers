@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EntretienRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,11 +22,23 @@ class Entretien
     #[ORM\ManyToOne(inversedBy: 'entretiens')]
     private ?Employeur $employeur = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
+
+    #[ORM\OneToMany(mappedBy: 'entretien', targetEntity: EntretienDate::class)]
+    private Collection $entretienDates;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\ManyToOne]
+    private ?Offre $offre = null;
+
+    public function __construct()
+    {
+        $this->entretienDates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,6 +69,50 @@ class Entretien
         return $this;
     }
 
+
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EntretienDate>
+     */
+    public function getEntretienDates(): Collection
+    {
+        return $this->entretienDates;
+    }
+
+    public function addEntretienDate(EntretienDate $entretienDate): static
+    {
+        if (!$this->entretienDates->contains($entretienDate)) {
+            $this->entretienDates->add($entretienDate);
+            $entretienDate->setEntretien($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntretienDate(EntretienDate $entretienDate): static
+    {
+        if ($this->entretienDates->removeElement($entretienDate)) {
+            // set the owning side to null (unless already changed)
+            if ($entretienDate->getEntretien() === $this) {
+                $entretienDate->setEntretien(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
@@ -67,14 +125,14 @@ class Entretien
         return $this;
     }
 
-    public function getDuration(): ?int
+    public function getOffre(): ?Offre
     {
-        return $this->duration;
+        return $this->offre;
     }
 
-    public function setDuration(?int $duration): static
+    public function setOffre(?Offre $offre): static
     {
-        $this->duration = $duration;
+        $this->offre = $offre;
 
         return $this;
     }
