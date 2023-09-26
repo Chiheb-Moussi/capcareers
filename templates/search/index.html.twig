@@ -21,7 +21,7 @@
                         <select id="secteur" class="form-control" name="secteur">
                             <option value=""></option>
                             {% for secteurItem in secteurs %}
-                                <option value="{{ secteurItem.id }}" {% if secteurItem.titre == secteur %}selected {% endif %}>{{ secteurItem.titre }}</option>
+                                <option value="{{ secteurItem.id }}" {% if secteurItem.id == secteur %}selected {% endif %}>{{ secteurItem.titre }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -30,7 +30,7 @@
                         <select id="category" class="form-control" name="category">
                             <option value=""></option>
                             {% for categoryItem in categories %}
-                                <option value="{{ categoryItem.id }}" {% if categoryItem.titre == category %}selected {% endif %}>{{ categoryItem.titre }}</option>
+                                <option value="{{ categoryItem.id }}" {% if categoryItem.id == category %}selected {% endif %}>{{ categoryItem.titre }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -48,7 +48,7 @@
                         <select id="skills" class="form-control select2" name="skills[]" multiple="multiple">
                             <option value=""></option>
                             {% for skill in skills %}
-                                <option value="{{ skill.id }}" >{{ skill.titre }}</option>
+                                <option value="{{ skill.id }}" {% if skill.id in skillsIds %}selected{% endif %} >{{ skill.titre }}</option>
                             {% endfor %}
                         </select>
                     </div>
