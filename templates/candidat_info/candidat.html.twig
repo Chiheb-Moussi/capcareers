@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container min-vh-100 py-5">
         <div class="d-flex mb-3 justify-content-between">
-            <h3 class="mb-3">{{ candidat.profession }} </h3>
+            <h3 class="mb-3">{{ candidat.candidatInfo.profession }} </h3>
 
             <a href="?intressted={{ intressted=='1' ?'0':'1' }}" class="btn btn-{{ intressted=='0' ?'primary':'danger' }}" style="font-weight: 600">{{ intressted=='0'? 'Intéressé par ce profil ?': 'Désintéressé par ceprofile'}}</a>
         </div>
