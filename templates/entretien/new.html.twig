@@ -3,7 +3,10 @@
 {% block content %}
     <form method="post">
     <div class="space-y-4 md:space-y-6">
-
+        <div>
+            <label for="titre" class="form-label">Titre de l'entretien</label>
+            <input id="titre" type="text" class=" form-control" name="titre" required/>
+        </div>
         <div>
             <label class="form-label" for="candidat">Candidat</label>
             <select id="candidat" class="form-control" name="candidat">
@@ -22,7 +25,7 @@
         </div>
         <div>
             <label for="duration" class="form-label">Durée en minutes</label>
-            <input id="duration" type="number" class=" form-control" name="duration" />
+            <input id="duration" type="number" class=" form-control" name="duration"  required/>
         </div>
         <div>
             <label for="date1" class="form-label">Proposition de date 1</label>

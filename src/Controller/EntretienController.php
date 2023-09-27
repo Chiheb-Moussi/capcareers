@@ -6,6 +6,7 @@ use App\Entity\Entretien;
 use App\Entity\EntretienDate;
 use App\Entity\IntresstedCandidats;
 use App\Repository\CandidatRepository;
+use App\Repository\EntretienDateRepository;
 use App\Repository\EntretienRepository;
 use App\Repository\IntresstedCandidatsRepository;
 use App\Repository\OffreRepository;
@@ -23,11 +24,33 @@ class EntretienController extends AbstractController
     {
         $employeur = $this->getUser();
         $entretiens = $employeur->getEntretiens();
-        /*$entretiensDates = array_map(function($entretien){
-            return $entretien->getEntretienDate()
-        })*/
+        $entretiensDates = [];
+        foreach ($entretiens as $entretien) {
+            foreach ($entretien->getEntretienDates() as $entretienDate) {
+                $entretiensDates[]=$entretienDate;
+            }
+        }
+
         return $this->render('entretien/index.html.twig', [
-            'entretiens' => $entretiens,
+            'entretiensDates' => $entretiensDates,
+            'left_menu' => 'calendrier',
+        ]);
+    }
+
+    #[Route('/entretien/candidat', name: 'app_entretien_candidat')]
+    public function candidatEntretiens(EntretienRepository $entretienRepository): Response
+    {
+        $candidat = $this->getUser();
+        $entretiens = $candidat->getEntretiens();
+        $entretiensDates = [];
+        foreach ($entretiens as $entretien) {
+            foreach ($entretien->getEntretienDates() as $entretienDate) {
+                $entretiensDates[]=$entretienDate;
+            }
+        }
+
+        return $this->render('entretien/candidat-entretiens.html.twig', [
+            'entretiensDates' => $entretiensDates,
             'left_menu' => 'calendrier',
         ]);
     }
@@ -37,6 +60,7 @@ class EntretienController extends AbstractController
     {
         $employeur = $this->getUser();
         if ($request->getMethod() === Request::METHOD_POST) {
+            $titre = $request->request->get('titre');
             $offre_id = $request->request->get('offre');
             $candidat_id = $request->request->get('candidat');
             $duration= $request->request->get('duration');
@@ -47,16 +71,18 @@ class EntretienController extends AbstractController
             $candidat = $candidatRepository->find($candidat_id);
 
             $entretien = new Entretien();
+            $entretien->setTitre($titre);
             $entretien->setOffre($offre);
             $entretien->setCandidat($candidat);
             $entretien->setEmployeur($employeur);
-            if($duration) {
-                $entretien->setDuration($duration);
-            }
+            $entretien->setDuration($duration);
             if ($date1) {
                 $firstPropositionDate = \DateTime::createFromFormat("d/m/Y H:i", $date1);
                 $firstProposition = new EntretienDate();
                 $firstProposition->setDate($firstPropositionDate);
+                $dateFin = clone $firstPropositionDate;
+                $dateFin->add(new \DateInterval("PT".$duration."M"));
+                $firstProposition->setDateFin($dateFin);
                 $entretien->addEntretienDate($firstProposition);
                 $em->persist($firstProposition);
             }
@@ -64,6 +90,9 @@ class EntretienController extends AbstractController
                 $secondPropositionDate = \DateTime::createFromFormat("d/m/Y H:i", $date2);
                 $secondPoposition = new EntretienDate();
                 $secondPoposition->setDate($secondPropositionDate);
+                $dateFin = clone $secondPropositionDate;
+                $dateFin->add(new \DateInterval("PT".$duration."M"));
+                $secondPoposition->setDateFin($dateFin);
                 $entretien->addEntretienDate($secondPoposition);
                 $em->persist($secondPoposition);
 
@@ -72,6 +101,9 @@ class EntretienController extends AbstractController
                 $thirdPropositionDate = \DateTime::createFromFormat("d/m/Y H:i", $date3);
                 $thirdProposition = new EntretienDate();
                 $thirdProposition->setDate($thirdPropositionDate);
+                $dateFin = clone $thirdPropositionDate;
+                $dateFin->add(new \DateInterval("PT".$duration."M"));
+                $thirdProposition->setDateFin($dateFin);
                 $entretien->addEntretienDate($thirdProposition);
                 $em->persist($thirdProposition);
             }
@@ -89,6 +121,37 @@ class EntretienController extends AbstractController
         return $this->render('entretien/new.html.twig', [
             'offres' => $offres,
             'intresstedCandidats' => $intresstedCandidats,
+            'left_menu' => 'calendrier'
+        ]);
+    }
+
+    #[Route('/entretien/{id}', name: 'app_entretien_details')]
+    public function details(Entretien $entretien)
+    {
+        return $this->render('entretien/details.html.twig', [
+            'entretien' => $entretien,
+            'left_menu' => 'calendrier'
+        ]);
+    }
+
+    #[Route('/entretien/candidat/{id}', name: 'app_entretien_candidat_details')]
+    public function candidatEntretienDetails(Entretien $entretien, Request $request, EntretienDateRepository $entretienDateRepository, EntityManagerInterface $em)
+    {
+        $entretienDateId = $request->query->get('date');
+        if($entretienDateId) {
+            $entretienDates = $entretien->getEntretienDates();
+            foreach ($entretienDates as $entretienDate) {
+                if($entretienDate->getId()==$entretienDateId) {
+                    $entretienDate->setConfirmed(true);
+                    $entretien->setDate($entretienDate->getDate());
+                }else {
+                    $em->remove($entretienDate);
+                }
+            }
+            $em->flush();
+        }
+        return $this->render('entretien/candidat-entretien-details.html.twig', [
+            'entretien' => $entretien,
             'left_menu' => 'calendrier'
         ]);
     }

@@ -1,4 +1,4 @@
-{% extends 'employeur/base-employeur.html.twig' %}
+{% extends 'candidat_info/base-candidat.html.twig' %}
 {% block style %}
     <link href="{{ asset('assets/css/calendar.css')}}" rel="stylesheet">
     <style>
@@ -40,7 +40,7 @@
                     {% for entretienDate in entretiensDates %}
                         {
                             title: '{{ entretienDate.entretien.titre }}',
-                            url: '/entretien/{{ entretienDate.entretien.id }}',
+                            url: '/entretien/candidat/{{ entretienDate.entretien.id }}',
                             start: '{{ entretienDate.date|date('Y-m-d\\TH:i:s') }}',
                             end: '{{ entretienDate.dateFin|date('Y-m-d\\TH:i:s') }}',
                             className: '{{ entretienDate.confirmed ? "entretien-confirmed": "entretien-not-confirmed" }}'

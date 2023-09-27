@@ -1,0 +1,44 @@
+{% extends 'candidat_info/base-candidat.html.twig' %}
+
+{% block content %}
+    <div class="p-4 p-md-5 space-y-4 md:space-y-5">
+        <h1 class="mb-4"> Entretien {{ entretien.titre }}</h1>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th class="w-25">Offre</th>
+                <td><a href="{{ entretien.offre.id }}">{{ entretien.offre.titre }}</a></td>
+            </tr>
+            <tr>
+                <th>Société</th>
+                <td>{{ entretien.employeur.societe }}</td>
+            </tr>
+            <tr>
+                <th>Durée</th>
+                <td>{{ entretien.duration }} minutes</td>
+            </tr>
+            {% if entretien.date %}
+            <tr>
+                <th>Date de l'entretien</th>
+                <td>{{ entretien.date|date('d/m/y H:i') }}</td>
+            </tr>
+            {% else %}
+                    <tr>
+                        <th>Propositions</th>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 20px">
+                            {% for propositionDate in entretien.entretienDates %}
+                                <div class="flex gap-2"><span style="background: #c0c4d1;width: fit-content;padding: 2px 4px;border-radius: 10px;">{{ propositionDate.date|date('d/m/y H:i')  }}</span> <a href="?date={{ propositionDate.id }}">accepter</a></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+            {% endif %}
+
+            </tbody>
+        </table>
+
+        <a href="/entretien/candidat" class="btn btn-primary">Retourner</a>
+    </div>
+{% endblock %}
