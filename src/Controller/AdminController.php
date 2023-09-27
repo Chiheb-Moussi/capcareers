@@ -6,6 +6,8 @@ use App\Entity\IntresstedCandidats;
 use App\Entity\IntresstedOffre;
 use App\Repository\IntresstedCandidatsRepository;
 use App\Repository\IntresstedOffreRepository;
+use App\Repository\UserRepository;
+use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
+    public function index(UserRepository $userRepository,OffreRepository $offreRepository): Response
     {
+        $countCandidat=$userRepository->countCandidat();
+        $countEmployeur=$userRepository->countEmployeur();
+        $countOffre=$offreRepository->countOffre();
+        $countOffreEnAttente=$offreRepository->countOffreEnAttente();
+        $countOffreAccepte=$offreRepository->countOffreAccepte();
+        $countOffreRefuser=$offreRepository->countOffreRefuser();
+        $chartDataFromController = [$countOffreAccepte,$countOffreRefuser, $countOffreEnAttente]; // Replace with your data
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
+            'candidat'=>$countCandidat,
+            'employeur'=>$countEmployeur,
+            'offre'=>$countOffre,
+            'offreEnAttente'=>$countOffreEnAttente,
+            'chartDataFromController' => json_encode($chartDataFromController),
         ]);
     }
 

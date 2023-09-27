@@ -20,7 +20,44 @@ class OffreRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Offre::class);
     }
-
+    public function countOffre(){
+        return $this->createQueryBuilder('o')
+        ->select('COUNT(o.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+    public function countOffreEnAttente(){
+        return $this->createQueryBuilder('o')
+        ->select('COUNT(o.id)')
+        ->where(
+            $this->createQueryBuilder('o')->expr()->orX(
+                'o.status = :val',
+                'o.status IS NULL'
+            )
+        )
+        ->setParameter('val', 'En attente')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+   public function countOffreAccepte()
+    {
+    return $this->createQueryBuilder('o')
+    ->select('COUNT(o.id)')
+    ->where('o.status = :val')
+    ->setParameter('val', 'Accepté')
+    ->getQuery()
+    ->getSingleScalarResult();
+    }
+   public function countOffreRefuser()
+   {
+    return $this->createQueryBuilder('o')
+    ->select('COUNT(o.id)')
+    ->where('o.status = :val')
+    ->setParameter('val', 'Refusé')
+    ->getQuery()
+    ->getSingleScalarResult();
+    }
+   
 //    /**
 //     * @return Offre[] Returns an array of Offre objects
 //     */
