@@ -37,37 +37,34 @@ class CandidatRegistrationFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse mail'
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'label' => 'Mot de passe',
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-            ->add('confirmPassword', PasswordType::class, [
-                'mapped' => false,
-                'required' => true,
             ]);
-
-        ;
+            if($options['with_password']) {
+                $builder->add('plainPassword', PasswordType::class, [
+                    // instead of being set onto the object directly,
+                    // this is read and encoded in the controller
+                    'label' => 'Mot de passe',
+                    'mapped' => false,
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez entrer un mot de passe',
+                        ]),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit comporter au moins {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
+                ]);
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Candidat::class,
+            'with_password' => true,
         ]);
     }
 }
