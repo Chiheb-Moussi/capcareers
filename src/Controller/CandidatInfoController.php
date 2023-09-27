@@ -15,6 +15,7 @@ use App\Repository\IntresstedCandidatsRepository;
 use App\Repository\IntresstedOffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,28 +53,23 @@ class CandidatInfoController extends AbstractController
         $candidatInfo = $candidat->getCandidatInfo();
 
         $form = $this->createForm(CandidatInfoType::class, $candidatInfo);
+
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cvFile = $request->files->get('cv');
-          //  dd($this->getParameter('kernel.project_dir') . '/public/uploads');
             if ($cvFile instanceof UploadedFile) {
+
                 $uniqueFolderName = $candidat->getId();
 
-                // Define the upload directory with the unique folder name
                 $uploadDirectory = $this->getParameter('kernel.project_dir') . '/public/uploads/' . $uniqueFolderName;
     
-                // Create the directory if it doesn't exist
                 if (!file_exists($uploadDirectory)) {
-                    mkdir($uploadDirectory, 0755, true); // Recursive directory creation
+                    mkdir($uploadDirectory, 0755, true);
                 }
-                // Handle the uploaded file here
-                // ...
                 $newFileName = $cvFile->getClientOriginalName();
 
-                // Move the uploaded file to the public/uploads directory
-               
                 $cvFile->move($uploadDirectory, $newFileName);
                 $candidatInfo->setCv($newFileName);
             }

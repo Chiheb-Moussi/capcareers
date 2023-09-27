@@ -36,12 +36,6 @@ class ExperienceType extends AbstractType
                 'format' => 'dd-MM-yyyy',
             ])
             ->add('description', TextareaType::class)
-            ->add('skills', EntityType::class, [
-                'class' => Skill::class,
-                'choice_label' => 'titre',
-                'multiple' => true,
-                'required' => false,
-            ])
         ;
     }
 

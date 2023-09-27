@@ -57,9 +57,7 @@ class CandidatInfoType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
             ])
-            ->add('cv', FileType::class, [
-                'label' => 'Mon CV',
-            ]);
+
         ;
     }
 
