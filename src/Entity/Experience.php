@@ -122,6 +122,12 @@ class Experience
 
         return $this;
     }
+    public function removeAllSkills(): static
+    {
+        $this->skills->clear();
+
+        return $this;
+    }
 
     public function getCandidatInfo(): ?CandidatInfo
     {

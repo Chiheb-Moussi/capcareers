@@ -34,7 +34,11 @@
 
             <div class="mb-3">
                 <label class="form-label">Skills</label>
-                {{ form_widget(form.skills, {'attr': {'class': 'form-check-input select2 w-100', 'multiple': 'multiple'}}) }}
+                <select class="form-check-input select2 w-100" name="skills[]" multiple="multiple">
+                    {% for skill in skills %}
+                        <option value="{{ skill.id }}" {% if skill in experience.skills %} selected{% endif %}>{{ skill.titre }}</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 fw-bold text-sm px-5 py-2.5 text-center mt-3">Enregistrer</button>

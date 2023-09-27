@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="p-4 p-md-5 space-y-4 md:space-y-5">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
         <div class="space-y-4 md:space-y-6">
             <h2>Mes informations</h2>
             {{ form_row(form._token) }}
@@ -34,8 +34,11 @@
             </div>
             <div class="mb-3">
                 <label for="formFileSm" class="form-label">Mon CV</label>
-                <input class="form-control " name="cv"  id="cv" type="file">
+                <input class="form-control" name="cv"  id="cv" type="file">
             </div>
+            {% if candidat_info.cv %}
+                <a href="/uploads/{{ candidat_info.candidat.id }}/{{ candidat_info.cv }}" target="_blank">Voir cv <i class="fa fa-eye"></i></a>
+            {% endif %}
             <button type="submit" class="btn btn-primary w-100 fw-bold text-sm px-5 py-2.5 text-center mt-3">Modifier</button>
         </div>
         {{ form_end(form, {render_rest: false}) }}

@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Candidat;
 use App\Entity\CandidatInfo;
 use App\Entity\Experience;
+use App\Entity\Skill;
 use App\Form\ExperienceType;
 use App\Repository\ExperienceRepository;
+use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,7 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_experience_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SkillRepository $skillRepository): Response
     {
         /** @var Candidat $candidat */
         $candidat = $this->getUser();
@@ -37,10 +39,25 @@ class ExperienceController extends AbstractController
         $candidatInfo = $candidat->getCandidatInfo();
         $experience = new Experience();
         $experience->setCandidatInfo($candidatInfo);
+        $skills = $skillRepository->findAll();
         $form = $this->createForm(ExperienceType::class, $experience);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if(array_key_exists('skills', $request->request->all())) {
+                $skillsData = $request->request->all()['skills'];
+                $experience->removeAllSkills();
+                foreach ($skillsData as $skillId) {
+                    $skill = $skillRepository->find($skillId);
+                    if(!$skill) {
+                        $skill = new Skill();
+                        $skill->setTitre($skillId);
+                        $entityManager->persist($skill);
+                    }
+                    $experience->addSkill($skill);
+
+                }
+            }
             $entityManager->persist($experience);
             $entityManager->flush();
 
@@ -49,6 +66,7 @@ class ExperienceController extends AbstractController
 
         return $this->render('experience/new.html.twig', [
             'experience' => $experience,
+            'skills' => $skills,
             'form' => $form,
             'left_menu'=> 'experience',
         ]);
@@ -64,12 +82,27 @@ class ExperienceController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_experience_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Experience $experience, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Experience $experience, EntityManagerInterface $entityManager, SkillRepository $skillRepository): Response
     {
+        $skills = $skillRepository->findAll();
         $form = $this->createForm(ExperienceType::class, $experience);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if(array_key_exists('skills', $request->request->all())) {
+                $skillsData = $request->request->all()['skills'];
+                $experience->removeAllSkills();
+                foreach ($skillsData as $skillId) {
+                    $skill = $skillRepository->find($skillId);
+                    if(!$skill) {
+                        $skill = new Skill();
+                        $skill->setTitre($skillId);
+                        $entityManager->persist($skill);
+                    }
+                    $experience->addSkill($skill);
+
+                }
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_experience_index', [], Response::HTTP_SEE_OTHER);
@@ -79,6 +112,7 @@ class ExperienceController extends AbstractController
             'experience' => $experience,
             'form' => $form,
             'left_menu'=> 'experience',
+            'skills' => $skills,
         ]);
     }
 
