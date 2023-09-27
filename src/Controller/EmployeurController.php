@@ -15,7 +15,8 @@ class EmployeurController extends AbstractController
     public function index(Request $request,  EntityManagerInterface $entityManager): Response
     {
         $employeur = $this->getUser();
-        $form = $this->createForm(EmployeurRegistrationFormType::class, $employeur);
+        $options = ['with_password'=>false];
+        $form = $this->createForm(EmployeurRegistrationFormType::class, $employeur, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

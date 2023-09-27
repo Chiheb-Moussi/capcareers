@@ -21,6 +21,16 @@ class IntresstedOffreRepository extends ServiceEntityRepository
         parent::__construct($registry, IntresstedOffre::class);
     }
 
+    public function findByOffreIds(array $idOffres)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.offre IN (:idOffres)')
+            ->setParameter('idOffres', $idOffres)
+            ->andWhere('i.status = :status')
+            ->setParameter('status', IntresstedOffre::STATUS_ACCEPTE )
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return IntresstedOffre[] Returns an array of IntresstedOffre objects
 //     */

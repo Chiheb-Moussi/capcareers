@@ -9,6 +9,7 @@ use App\Repository\CandidatRepository;
 use App\Repository\EntretienDateRepository;
 use App\Repository\EntretienRepository;
 use App\Repository\IntresstedCandidatsRepository;
+use App\Repository\IntresstedOffreRepository;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,7 +57,7 @@ class EntretienController extends AbstractController
     }
 
     #[Route('/entretien/new', name: 'app_entretien_new')]
-    public function new(IntresstedCandidatsRepository $intresstedCandidatsRepository, Request $request, OffreRepository $offreRepository, CandidatRepository $candidatRepository, EntityManagerInterface $em): Response
+    public function new(IntresstedCandidatsRepository $intresstedCandidatsRepository, Request $request, OffreRepository $offreRepository, CandidatRepository $candidatRepository, EntityManagerInterface $em, IntresstedOffreRepository $intresstedOffreRepository): Response
     {
         $employeur = $this->getUser();
         if ($request->getMethod() === Request::METHOD_POST) {
@@ -116,11 +117,25 @@ class EntretienController extends AbstractController
 
 
         $offres = $employeur->getOffres();
+        $offresIds = [];
+        foreach ($offres as $offre) {
+            $offresIds[]= $offre->getId();
+        }
+        $candidats = [];
         $intresstedCandidats = $intresstedCandidatsRepository->findBy(['employeur' => $employeur, 'status' => IntresstedCandidats::STATUS_ACCEPTE]);
+        foreach ($intresstedCandidats as $intresstedCandidat) {
+            $candidats[] = $intresstedCandidat->getCandidat();
+        }
+        $intresstedOffres = $intresstedOffreRepository->findByOffreIds($offresIds);
+        foreach ($intresstedOffres as $intresstedOffre) {
+            if(!in_array($intresstedOffre->getCandidat(), $candidats)) {
+                $candidats[] = $intresstedOffre->getCandidat();
+            }
+        }
 
         return $this->render('entretien/new.html.twig', [
             'offres' => $offres,
-            'intresstedCandidats' => $intresstedCandidats,
+            'candidats' => $candidats,
             'left_menu' => 'calendrier'
         ]);
     }

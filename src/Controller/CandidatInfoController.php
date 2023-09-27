@@ -24,11 +24,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[Route('/candidat/info')]
 class CandidatInfoController extends AbstractController
 {
-    #[Route('/', name: 'app_candidat_info_index', methods: ['GET'])]
+    #[Route('/', name: 'app_candidat_info_index', methods: ['GET', 'POST'])]
     public function index(Request $request,  EntityManagerInterface $entityManager): Response
     {
         $candidat = $this->getUser();
-        $form = $this->createForm(CandidatRegistrationFormType::class, $candidat);
+        $options = ['with_password'=>false];
+        $form = $this->createForm(CandidatRegistrationFormType::class, $candidat,$options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
