@@ -10,8 +10,8 @@
         <div>
             <label class="form-label" for="candidat">Candidat</label>
             <select id="candidat" class="form-control" name="candidat">
-                {% for intresstedCandidat in intresstedCandidats %}
-                    <option value="{{ intresstedCandidat.candidat.id }}">{{ intresstedCandidat.candidat }}</option>
+                {% for candidat in candidats %}
+                    <option value="{{ candidat.id }}">{{ candidat }}</option>
                 {% endfor %}
             </select>
         </div>
