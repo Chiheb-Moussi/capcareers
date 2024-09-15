@@ -57,6 +57,39 @@ class OffreRepository extends ServiceEntityRepository
     ->getQuery()
     ->getSingleScalarResult();
     }
+
+    public function countOffresByMonthOfYear(int $year)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUBSTRING(p.createdAt, 6, 2) as month, COUNT(p.id) as offre_count')
+            ->where('SUBSTRING(p.createdAt, 1, 4) = :year')
+            ->setParameter('year', $year)
+            ->groupBy('month')
+            ->orderBy('month', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countByTypeContrat()
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.typeContrat, COUNT(o.id) as contrat_count')
+            ->groupBy('o.typeContrat')
+            ->orderBy('contrat_count', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countBySecteur()
+    {
+        return $this->createQueryBuilder('o')
+            ->select('s.titre, COUNT(o.id) as offre_count')
+            ->join('o.secteur', 's')  // Perform the join with the secteur table
+            ->groupBy('s.titre')
+            ->orderBy('offre_count', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
    
 //    /**
 //     * @return Offre[] Returns an array of Offre objects

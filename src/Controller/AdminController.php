@@ -25,7 +25,30 @@ class AdminController extends AbstractController
         $countOffreEnAttente=$offreRepository->countOffreEnAttente();
         $countOffreAccepte=$offreRepository->countOffreAccepte();
         $countOffreRefuser=$offreRepository->countOffreRefuser();
-        $chartDataFromController = [$countOffreAccepte,$countOffreRefuser, $countOffreEnAttente]; // Replace with your data
+        $chartDataFromController = [$countOffreAccepte,$countOffreRefuser, $countOffreEnAttente];
+        $currentYear = (int) date('Y');
+        $offresCounts = $offreRepository->countOffresByMonthOfYear($currentYear);
+        $offresCountsByMonth = [
+            '01' => 0,
+            '02' => 0,
+            '03' => 0,
+            '04' => 0,
+            '05' => 0,
+            '06' => 0,
+            '07' => 0,
+            '08' => 0,
+            '09' => 0,
+            '10' => 0,
+            '11' => 0,
+            '12' => 0,
+        ];
+
+        foreach ($offresCounts as $val) {
+            $offresCountsByMonth[$val['month']] = $val['offre_count'];
+        }
+
+        $contratCounts = $offreRepository->countByTypeContrat();
+        $secteurCounts = $offreRepository->countBySecteur();
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'candidat'=>$countCandidat,
@@ -33,6 +56,9 @@ class AdminController extends AbstractController
             'offre'=>$countOffre,
             'offreEnAttente'=>$countOffreEnAttente,
             'chartDataFromController' => json_encode($chartDataFromController),
+            'offresCounts'=>json_encode(array_values($offresCountsByMonth)),
+            'contratCounts'=>json_encode($contratCounts),
+            'secteurCounts'=>json_encode($secteurCounts),
         ]);
     }
 
