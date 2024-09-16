@@ -73,6 +73,7 @@ class CandidatInfoController extends AbstractController
 
                 $cvFile->move($uploadDirectory, $newFileName);
                 $candidatInfo->setCv($newFileName);
+                $candidatInfo->setDateCv(new \DateTime());
             }
             
             $entityManager->flush();

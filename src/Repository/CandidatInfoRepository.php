@@ -21,6 +21,18 @@ class CandidatInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, CandidatInfo::class);
     }
 
+    public function countCvByMonthOfYear(int $year)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUBSTRING(p.dateCv, 6, 2) as month, COUNT(p.id) as cv_count')
+            ->where('SUBSTRING(p.dateCv, 1, 4) = :year')
+            ->setParameter('year', $year)
+            ->groupBy('month')
+            ->orderBy('month', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return CandidatInfo[] Returns an array of CandidatInfo objects
 //     */

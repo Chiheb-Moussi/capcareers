@@ -63,6 +63,9 @@ class CandidatInfo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profession = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateCv = null;
+
     public function __construct()
     {
         $this->candidatInfoSkills = new ArrayCollection();
@@ -270,6 +273,18 @@ class CandidatInfo
     public function setProfession(?string $profession): static
     {
         $this->profession = $profession;
+
+        return $this;
+    }
+
+    public function getDateCv(): ?\DateTimeInterface
+    {
+        return $this->dateCv;
+    }
+
+    public function setDateCv(?\DateTimeInterface $dateCv): static
+    {
+        $this->dateCv = $dateCv;
 
         return $this;
     }

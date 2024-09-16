@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\IntresstedCandidats;
 use App\Entity\IntresstedOffre;
+use App\Repository\CandidatInfoRepository;
 use App\Repository\IntresstedCandidatsRepository;
 use App\Repository\IntresstedOffreRepository;
 use App\Repository\UserRepository;
@@ -17,7 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository,OffreRepository $offreRepository): Response
+    public function index(
+        UserRepository $userRepository,
+        OffreRepository $offreRepository,
+        CandidatInfoRepository $candidatInfoRepository,
+        IntresstedOffreRepository $intresstedOffreRepository,
+        IntresstedCandidatsRepository $intresstedCandidatsRepository
+    ): Response
     {
         $countCandidat=$userRepository->countCandidat();
         $countEmployeur=$userRepository->countEmployeur();
@@ -28,7 +35,7 @@ class AdminController extends AbstractController
         $chartDataFromController = [$countOffreAccepte,$countOffreRefuser, $countOffreEnAttente];
         $currentYear = (int) date('Y');
         $offresCounts = $offreRepository->countOffresByMonthOfYear($currentYear);
-        $offresCountsByMonth = [
+        $initialMonthsValue = [
             '01' => 0,
             '02' => 0,
             '03' => 0,
@@ -42,13 +49,54 @@ class AdminController extends AbstractController
             '11' => 0,
             '12' => 0,
         ];
-
+        $offresCountsByMonth = $initialMonthsValue;
         foreach ($offresCounts as $val) {
             $offresCountsByMonth[$val['month']] = $val['offre_count'];
         }
 
         $contratCounts = $offreRepository->countByTypeContrat();
         $secteurCounts = $offreRepository->countBySecteur();
+
+        $cvCount = $candidatInfoRepository->countCvByMonthOfYear($currentYear);
+        $cvCountByMonth = $initialMonthsValue;
+        foreach ($cvCount as $val) {
+            $cvCountByMonth[$val['month']] = $val['cv_count'];
+        }
+
+        // quel sont les secteurs des offres ou il y a beaucoup de matching
+        $intresstedOffres = $intresstedOffreRepository->findAll();
+        $dataMatchingOffreSecteur = [];
+        $dataMatchingCandidatSkills = [];
+        foreach ($intresstedOffres as $intresstedOffre) {
+            $employeur = $intresstedOffre->getOffre()->getEmployeur();
+            $candidat = $intresstedOffre->getCandidat();
+            if ($candidat && $employeur) {
+                $matching = $intresstedCandidatsRepository->findOneBy(['employeur'=>$employeur, 'candidat' => $candidat]);
+                if ($matching !== null) {
+                    $offre = $intresstedOffre->getOffre();
+                    $secteur = $offre->getSecteur();
+
+                    if ($secteur !== null) {
+                        if (array_key_exists($secteur->getTitre(), $dataMatchingOffreSecteur)) {
+                            $dataMatchingOffreSecteur[$secteur->getTitre()] += 1;
+                        }else {
+                            $dataMatchingOffreSecteur[$secteur->getTitre()] = 1;
+                        }
+
+                        $skills = $offre->getSkills();
+                        foreach ($skills as $skill) {
+                            if (array_key_exists($skill->getTitre(), $dataMatchingCandidatSkills)) {
+                                $dataMatchingCandidatSkills[$skill->getTitre()] += 1;
+                            }else {
+                                $dataMatchingCandidatSkills[$skill->getTitre()] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
             'candidat'=>$countCandidat,
@@ -59,6 +107,9 @@ class AdminController extends AbstractController
             'offresCounts'=>json_encode(array_values($offresCountsByMonth)),
             'contratCounts'=>json_encode($contratCounts),
             'secteurCounts'=>json_encode($secteurCounts),
+            'cvCount'=>json_encode(array_values($cvCountByMonth)),
+            'dataMatchingOffreSecteur' => json_encode($dataMatchingOffreSecteur),
+            'dataMatchingCandidatSkills' => json_encode($dataMatchingCandidatSkills),
         ]);
     }
 
@@ -71,16 +122,18 @@ class AdminController extends AbstractController
         foreach ($intresstedOffres as $intresstedOffre) {
             $employeur = $intresstedOffre->getOffre()->getEmployeur();
             $candidat = $intresstedOffre->getCandidat();
-            //ici on verifie si il y a matching entre le candidat, l'offre  avec le l'employeur et le candidat interessé
-            $matching = $intresstedCandidatsRepository->findOneBy(['employeur'=>$employeur, 'candidat' => $candidat]);
-            $data[] = [
-                'id' => $intresstedOffre->getId(),
-                'candidat' => $candidat,
-                'offre' => $intresstedOffre->getOffre(),
-                'employeur' => $employeur,
-                'matching' => ($matching !== null),// on revoie une valeur boolean pour verifier si il'ya matching
-                'status' => $intresstedOffre->getStatusHtml(),
-            ];
+            if ($candidat) {
+                //ici on verifie si il y a matching entre le candidat, l'offre  avec le l'employeur et le candidat interessé
+                $matching = $intresstedCandidatsRepository->findOneBy(['employeur'=>$employeur, 'candidat' => $candidat]);
+                $data[] = [
+                    'id' => $intresstedOffre->getId(),
+                    'candidat' => $candidat,
+                    'offre' => $intresstedOffre->getOffre(),
+                    'employeur' => $employeur,
+                    'matching' => ($matching !== null),// on revoie une valeur boolean pour verifier si il'ya matching
+                    'status' => $intresstedOffre->getStatusHtml(),
+                ];
+            }
         }
         return $this->render('admin/candidats.html.twig', [
             'data' => $data,
@@ -119,7 +172,7 @@ class AdminController extends AbstractController
         foreach ($intresstedCandidats as $intresstedCandidat) {
             $employeur = $intresstedCandidat->getEmployeur();
             $candidat = $intresstedCandidat->getCandidat();
-            $offres = $employeur->getOffres();
+            $offres = $employeur ? $employeur->getOffres() : [];
             $matching = false;
             foreach($offres as $offre) {
                 $foundMatching = $intresstedOffreRepository->findOneBy(['offre'=>$offre, 'candidat' => $candidat]);

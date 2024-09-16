@@ -37,7 +37,11 @@
                         <tbody>
                         {% for line in data %}
                             <tr>
-                                <td>{{ line.employeur.societe }}</td>
+                                <td>
+                                    {% if line.employeur is not null and line.employeur.societe is not null %}
+                                        {{ line.employeur.societe }}
+                                    {% endif %}
+                                </td>
                                 <td>{{ line.candidat }}</td>
                                 <td>{{ line.candidat.candidatInfo.profession }}</td>
                                 <td>{{ line.candidat.candidatInfo.typeProfile }}</td>
